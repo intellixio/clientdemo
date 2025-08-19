@@ -184,21 +184,19 @@
                 autoResizeTextarea(messageInput);
                 messageInput.focus();
                 const loaderElement = showLoader();
-                let possible_api_returned_error = null;
                 try {
                     const response = await fetch(API_ENDPOINT, {
                         method: 'POST', headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ message: messageText, company_url_hmac: companyUrlHmac, session_id: sessionId }),
                     });
-                    possible_api_returned_error = await response.text();
-                    if (!response.ok) { throw new Error(`HTTP error! Status: ${response.status}`); }
                     const aiResponseText = await response.text();
+                    if (!response.ok) { throw new Error(`HTTP error! Status: ${response.status}`); }
                     loaderElement.remove();
                     addMessage(aiResponseText, 'ai');
                 } catch (error) {
                     console.error('Failed to get response:', error);
                     loaderElement.remove();
-                    addMessage(possible_api_returned_error, 'ai');
+                    addMessage(aiResponseText, 'ai');
                     addMessage('Sorry, something went wrong. Please try again later.', 'ai');
                 }
             }

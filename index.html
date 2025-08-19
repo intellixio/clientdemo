@@ -184,12 +184,13 @@
                 autoResizeTextarea(messageInput);
                 messageInput.focus();
                 const loaderElement = showLoader();
+                let aiResponseText = null;
                 try {
                     const response = await fetch(API_ENDPOINT, {
                         method: 'POST', headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ message: messageText, company_url_hmac: companyUrlHmac, session_id: sessionId }),
                     });
-                    const aiResponseText = await response.text();
+                    aiResponseText = await response.text();
                     if (!response.ok) { throw new Error(`HTTP error! Status: ${response.status}`); }
                     loaderElement.remove();
                     addMessage(aiResponseText, 'ai');

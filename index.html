@@ -184,7 +184,7 @@
                 autoResizeTextarea(messageInput);
                 messageInput.focus();
                 const loaderElement = showLoader();
-                const possible_api_returned_error = null;
+                let possible_api_returned_error = null;
                 try {
                     const response = await fetch(API_ENDPOINT, {
                         method: 'POST', headers: { 'Content-Type': 'application/json' },
